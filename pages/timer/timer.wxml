@@ -3,7 +3,7 @@
 <view class='timer__page'>
 
   <view class='timer_title'>
-    <text>总时长：{{totalTimeStr}}(min)</text>
+    <text>总时长：{{totalTimeStr}} min</text>
   </view>
 
   <view class='timer__itemTop'>
