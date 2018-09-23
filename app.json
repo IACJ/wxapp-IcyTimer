@@ -1,13 +1,18 @@
 {
   "pages":[
     "pages/timer/timer",
+    "pages/timing/timing",
+    "pages/test/test",
     "pages/index/index",
     "pages/logs/logs"
   ],
   "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+  
+
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#2a579a",
+    "navigationBarTitleText": "Icy Timer",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": false
   }
 }
