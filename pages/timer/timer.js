@@ -23,9 +23,6 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
-
-
-
   },
 
   /**
@@ -160,10 +157,10 @@ Page({
     }
 
     this.doNextJob(0)
-
     this.setData({
       isTiming : true
     })
+    wx.vibrateLong()
   },
   btnStop : function(e) {
     console.log(e)
@@ -194,6 +191,7 @@ Page({
       setTimeout(wx.vibrateLong, 1000)
       setTimeout(wx.vibrateLong, 2000)
       setTimeout(wx.vibrateLong, 3000)
+      setTimeout(wx.vibrateLong, 4000)
       setTimeout(wx.vibrateLong, 5000)
       that.dingDingDing()
       return
@@ -217,6 +215,7 @@ Page({
         wx.vibrateLong()
         setTimeout(wx.vibrateLong, 1000)
         setTimeout(wx.vibrateLong, 2000)
+        setTimeout(wx.vibrateLong, 3000)
         that.dingDingDing()
         that.doNextJob(i+1)
       }
