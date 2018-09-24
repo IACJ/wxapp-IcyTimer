@@ -1,14 +1,8 @@
 {
   "pages":[
-    "pages/timer/timer",
-    "pages/timing/timing",
-    "pages/test/test",
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/timer/timer"
   ],
   "window":{
-  
-
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#2a579a",
     "navigationBarTitleText": "Icy Timer",

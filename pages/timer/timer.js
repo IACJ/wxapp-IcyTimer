@@ -20,6 +20,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
+
+
 
   },
 
@@ -179,9 +184,6 @@ Page({
   },
   doNextJob: function(i) {
     let jobList = this.data.jobList
-    let inputTime = jobList[i].inputTime
-    let timeStr = this.min2hms(inputTime)
-    console.log(timeStr)
 
     if (i >= jobList.length) {
       wx.showToast({
@@ -189,20 +191,15 @@ Page({
         icon: 'none',
       })
       wx.vibrateLong()
-      wx.vibrateLong()
-      wx.vibrateLong()
-      wx.vibrateLong()
-      wx.vibrateLong()
-      wx.vibrateLong({
-        success: function (e) {
-          console.log('震动成功.')
-        },
-        fail: function (e) {
-          console.log('震动失败.')
-        },
-      })
+      setTimeout(wx.vibrateLong, 1000)
+      setTimeout(wx.vibrateLong, 2000)
+      setTimeout(wx.vibrateLong, 3000)
+      setTimeout(wx.vibrateLong, 5000)
+      that.dingDingDing()
       return
     }
+    let inputTime = jobList[i].inputTime
+    let timeStr = this.min2hms(inputTime)
     this.setData({
       i : i
     })
@@ -215,17 +212,12 @@ Page({
         wx.showToast({
           title: '完成任务'+(i+1),
           icon: 'none',
+          duration: 3000,
         })
         wx.vibrateLong()
-        wx.vibrateLong()
-        wx.vibrateLong({
-          success: function(e){
-            console.log('震动成功.')
-          },
-          fail: function (e) {
-            console.log('震动失败.')
-          },
-        })
+        setTimeout(wx.vibrateLong, 1000)
+        setTimeout(wx.vibrateLong, 2000)
+        that.dingDingDing()
         that.doNextJob(i+1)
       }
     })
@@ -236,5 +228,11 @@ Page({
     let thisTime = new Date(thatTime + 1000 * 60 * min);
     let thisTimeStr = thisTime.toString().substr(16, 8);//去掉前面的年月日就剩时分秒了
     return thisTimeStr
+  },
+  dingDingDing: function(){
+    const innerAudioContext = wx.createInnerAudioContext();
+    innerAudioContext.obeyMuteSwitch = false
+    innerAudioContext.src = '/voice/voice.mp3';//链接到音频的地址
+    innerAudioContext.play()
   }
 })
