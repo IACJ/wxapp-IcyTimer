@@ -3,7 +3,7 @@
 <view class='timer__page'>
 
   <view class='timer_title'>
-    <text>总时长：{{totalTimeStr}} min</text>
+    <text>总时长：{{totalTime}} min</text>
   </view>
 
   <view class='timer__itemTop'>
@@ -18,35 +18,64 @@
   <view class='timer__item'
       wx:for='{{jobList}}'
       wx:key='{{item.id}}'>
-    <view class='timer__block'>
-      <text>{{index+1}}</text>
+
+    <!-- 未计时 -->
+    <view wx:if='{{!isTiming}}' class='timer__itemSetting'>
+      <view class='timer__block'>
+        <text>{{index+1}}</text>
+      </view>
+      <view class='timer__block'>    
+        <input 
+            id='{{index}}' 
+            type='number' 
+            maxlength="2"
+            placeholder="____" 
+            bindinput="bindInput"
+            value="{{item.inputTime}}"/>
+      </view>
     </view>
-    <view class='timer__block' wx:if='{{!isTiming}}'>    
-      <input 
-          id='{{index}}' 
-          type='number' 
-          maxlength="2"
-          placeholder="____" 
-          bindinput="bindInput"
-          value="{{item.inputTime}}"/>
+    <!-- 活跃项目 -->
+    <view wx:if='{{isTiming && index == i}}' class='timer__itemActive'>
+      <view class='timer__block'>
+        <text>{{index+1}}</text>
+      </view>
+      <view class='timer__block'>    
+        <text>{{item.inputTime}}</text>
+      </view>
     </view>
-    <view class='timer__block' wx:else>    
-      <text>{{item.inputTime}}</text>
+    <!-- 已完成项目 -->
+    <view wx:if='{{isTiming && index < i}}' class='timer__itemDone'>
+      <view class='timer__block'>
+        <text>{{index+1}}</text>
+      </view>
+      <view class='timer__block'>    
+        <text>{{item.inputTime}}</text>
+      </view>
+    </view>
+    <!-- 等待项目 -->
+    <view wx:if='{{isTiming && index > i}}' class='timer__itemWaiting'>
+      <view class='timer__block'>
+        <text>{{index+1}}</text>
+      </view>
+      <view class='timer__block'>    
+        <text>{{item.inputTime}}</text>
+      </view>
     </view>
   </view>
 
   <view wx:if='{{!isTiming}}' class='timer__listControl'>
+    <view class='timer__textButton' bindtap='reSet'>重置</view>
     <view class='timer__textButton' bindtap='listPush'>加任务</view>
     <view class='timer__textButton' bindtap='listPop'>减任务</view>
   </view>
-  <view wx:else>
-    <view>当前任务倒计时： 00:00:00</view>
-    <view>总共任务倒计时： 00:00:00</view>
+  <view wx:else class='timer__countingArea'>
+    <view style='font-size: 14pt;'>当前任务倒计时 </view>
+    <view style='font-size: 25pt;'>{{wxTimer}} </view>
   </view>
 
   <button wx:if='{{!isTiming && !checkOk}}'  type="default" bindtap='btnStart'>开始计时</button>
   <button wx:elif='{{!isTiming && checkOk}}' type="primary" bindtap='btnStart'>开始计时</button>
   
-  <button wx:else  type="warn" class='timer__button' bindtap='btnStop'>暂停</button>
+  <button wx:else  type="warn" class='timer__button' bindtap='btnStop'>停止</button>
 
 </view>

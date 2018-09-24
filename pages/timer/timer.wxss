@@ -1,5 +1,9 @@
 /* pages/timer/timer.wxss */
 
+view {
+  /* borde-size */
+}
+
 .timer__page {
   height: 100%;
   display: flex;
@@ -13,7 +17,7 @@
 } 
 
 .timer_title {
-  border: #f0f 1px solid;
+  /* border: #f0f 1px solid; */
   margin: 20rpx;
   font-size: 20pt;
   color: #1296db
@@ -21,9 +25,11 @@
 
 .timer__itemTop{
   width: 100%;
+  height: 100rpx;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
   border: #0f0 1px solid;
+  border-radius: 8px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -34,14 +40,58 @@
 .timer__item {
   width: 100%;
   height: 100rpx;
-  margin-top: 10rpx;
-
-  border: #00f 1px solid;
+  margin-top: 15rpx;
+  /* border: #00f 1px solid; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   
+}
+
+.timer__itemSetting {
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+  border: #b2b2b2 1px solid;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.timer__itemActive {
+  width: 100%;
+  height: 100%;
+  background:20% #09bb07;
+  border: #b2b2b2 1px solid;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.timer__itemDone {
+  width: 100%;
+  height: 100%;
+  background-color: #b2b2b2;
+  border: #b2b2b2 1px solid;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.timer__itemWaiting {
+  width: 100%;
+  height: 100%;
+  background-color: FFF;
+  border: #b2b2b2 1px solid;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .timer__block{
@@ -53,7 +103,7 @@
   width: 100%;
   margin-top: 60rpx;
   margin-bottom: 20rpx;
-  border: #0f0 1px solid;
+  /* border: #0f0 1px solid; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -62,5 +112,16 @@
 
 .timer__textButton {
   border: #0ff 1px solid;
-  padding: 20rpx; 
+  width: 130rpx;
+  padding: 20rpx;
+  text-align: center 
+}
+
+.timer__countingArea {
+  margin-top: 50rpx;
+  margin-bottom: 50rpx;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

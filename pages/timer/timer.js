@@ -1,18 +1,19 @@
 // pages/timer/timer.js
+
+var timer = require('./wxTimer.js');
+console.log(timer)
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    totalTimeStr : "0",
+    totalTime : 0,
     isTiming : false,
     checkOk : false,
-    jobList:[
-      { id: 0, name: 'haha1' },
-      { id: 1, name: 'haha2' },
-      { id: 2, name: 'haha3' },
-    ]
+    jobList:[{},{},{},],
+    wxTimerList: {},
   },
 
   /**
@@ -33,7 +34,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log('onShow calibration.')
+    this.currentWxTimer && this.currentWxTimer.calibration()
   },
 
   /**
@@ -83,10 +85,13 @@ Page({
   },
   listPop: function (e) {
     console.log(e)
-    var myList = this.data.jobList
-    myList.pop()
+    var jobList = this.data.jobList
+    if (jobList.length <=1) {
+      return
+    }
+    jobList.pop()
     this.setData({
-      jobList: myList
+      jobList: jobList
     })
     this.updateTotalTime()
     this.updateCheckOK()
@@ -104,6 +109,7 @@ Page({
     this.updateTotalTime()
     this.updateCheckOK()
   },
+
   updateTotalTime : function(){
     let totalTime = 0;
     let jobList = this.data.jobList
@@ -113,7 +119,7 @@ Page({
     })
 
     this.setData({
-      totalTimeStr: totalTime
+      totalTime: totalTime
     })
   },
   updateCheckOK : function(e) {
@@ -129,10 +135,9 @@ Page({
       checkOk: checkOk
     })
   },
+
   btnStart : function(e) {
     console.log(e)
-
-
     if (!this.data.checkOk) {
       wx.showToast({
         title: '每个任务应大于0min',
@@ -140,7 +145,16 @@ Page({
       })
       return 
     }
+    let totalTime = this.data.totalTime
+    if (totalTime >= 1440) {
+      wx.showToast({
+        title: '总时长应小于1天',
+        icon: 'none',
+      })
+      return 
+    }
 
+    this.doNextJob(0)
 
     this.setData({
       isTiming : true
@@ -148,8 +162,79 @@ Page({
   },
   btnStop : function(e) {
     console.log(e)
+    this.currentWxTimer.stop()
     this.setData({
       isTiming : false
     })
+  },
+  reSet : function(e) {
+    console.log(e)
+    let jobList = []
+    jobList.push({},{},{})
+    this.setData({
+      jobList : jobList
+    })
+    this.updateTotalTime()
+    this.updateCheckOK()
+  },
+  doNextJob: function(i) {
+    let jobList = this.data.jobList
+    let inputTime = jobList[i].inputTime
+    let timeStr = this.min2hms(inputTime)
+    console.log(timeStr)
+
+    if (i >= jobList.length) {
+      wx.showToast({
+        title: '完成所有任务！',
+        icon: 'none',
+      })
+      wx.vibrateLong()
+      wx.vibrateLong()
+      wx.vibrateLong()
+      wx.vibrateLong()
+      wx.vibrateLong()
+      wx.vibrateLong({
+        success: function (e) {
+          console.log('震动成功.')
+        },
+        fail: function (e) {
+          console.log('震动失败.')
+        },
+      })
+      return
+    }
+    this.setData({
+      i : i
+    })
+    
+    let that = this
+    this.currentWxTimer = new timer({
+      beginTime: timeStr,
+      complete: function(e) {
+        console.log('完成任务'+(i+1))
+        wx.showToast({
+          title: '完成任务'+(i+1),
+          icon: 'none',
+        })
+        wx.vibrateLong()
+        wx.vibrateLong()
+        wx.vibrateLong({
+          success: function(e){
+            console.log('震动成功.')
+          },
+          fail: function (e) {
+            console.log('震动失败.')
+          },
+        })
+        that.doNextJob(i+1)
+      }
+    })
+    this.currentWxTimer.start(this);
+  },
+  min2hms: function(min){
+    let thatTime = new Date("1970/01/01 00:00:00").getTime();
+    let thisTime = new Date(thatTime + 1000 * 60 * min);
+    let thisTimeStr = thisTime.toString().substr(16, 8);//去掉前面的年月日就剩时分秒了
+    return thisTimeStr
   }
 })
