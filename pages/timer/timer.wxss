@@ -16,7 +16,7 @@
   border: #f0f 1px solid;
   margin: 20rpx;
   font-size: 20pt;
-  color: #353535
+  color: #1296db
 }
 
 .timer__itemTop{
@@ -33,7 +33,7 @@
 
 .timer__item {
   width: 100%;
-  height: 70rpx;
+  height: 100rpx;
   margin-top: 10rpx;
 
   border: #00f 1px solid;

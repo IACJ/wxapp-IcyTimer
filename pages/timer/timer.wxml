@@ -3,7 +3,7 @@
 <view class='timer__page'>
 
   <view class='timer_title'>
-    <text>总时长：{{totalTimeStr}}(min)</text>
+    <text>总时长：{{totalTimeStr}} min</text>
   </view>
 
   <view class='timer__itemTop'>
@@ -47,6 +47,6 @@
   <button wx:if='{{!isTiming && !checkOk}}'  type="default" bindtap='btnStart'>开始计时</button>
   <button wx:elif='{{!isTiming && checkOk}}' type="primary" bindtap='btnStart'>开始计时</button>
   
-  <button wx:else  type="warn" class='timer__button' bindtap='btnStop'>停止计时</button>
+  <button wx:else  type="warn" class='timer__button' bindtap='btnStop'>暂停</button>
 
 </view>
